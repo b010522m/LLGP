@@ -9,6 +9,12 @@ int WinMain()
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
+    sf::ConvexShape triangle; 
+    triangle.setPointCount(3);
+    triangle.setPoint(0, { 120.0f, 120.0f });
+    triangle.setPoint(1, { 150.0f, 150.0f });
+    triangle.setPoint(2, { 90.0f, 150.0f });
+
     while (window.isOpen())
     {
         // Event polling section of code - this must be done in the thread which created the window
@@ -21,6 +27,7 @@ int WinMain()
 
         window.clear();
         window.draw(shape);
+        window.draw(triangle);
         window.display();
     }
 }
