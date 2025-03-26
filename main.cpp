@@ -4,7 +4,11 @@
 /*
     This version of the SFML "hello world" is statically linked, you may wish to try the dynamically linked version as well.
 */
+#ifdef _DEBUG
+int main()
+#else
 int WinMain()
+#endif
 {
     sf::RenderWindow window(sf::VideoMode({ 800, 800 }), "SFML works!");
 
