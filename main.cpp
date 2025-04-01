@@ -23,6 +23,21 @@ public:
     }
 };
 
+class EnemyOne
+{
+public:
+    RectangleShape enemyShape;
+    Vector2f currentVelocity;
+    float maxSpeed = 4.f;
+
+    EnemyOne()
+        : currentVelocity(0.f, 0.f), maxSpeed(0.5f)
+    {
+        this->enemyShape.setFillColor(Color::Magenta);
+        this->enemyShape.setSize(Vector2(50.f, 50.f));
+    }
+};
+
 #ifdef _DEBUG
 int main()
 #else
@@ -38,10 +53,9 @@ int WinMain()
     player.setFillColor(Color::White);
 
     //Enemy
+    EnemyOne e1;
     RectangleShape enemy;
-    enemy.setFillColor(Color::Magenta);
-    enemy.setSize(Vector2(50.f, 50.f));
-    vector<RectangleShape> enemies;
+    vector<EnemyOne> enemies;
     int enemySpawnCounter = 0;
 
     //Bullet
@@ -50,9 +64,12 @@ int WinMain()
 
     //Vector
     Vector2f playerCentre;
+    Vector2f enemyCentre;
     Vector2f mousePosWindow;
     float arctangent;
+    float enemyarctangent;
     Vector2f aimDirNorm;
+    Vector2f enemyAimDirNorm;
 
     while (window.isOpen())
     {
@@ -97,9 +114,21 @@ int WinMain()
             }
             if (enemySpawnCounter >= 20 && enemies.size() <20) 
             {
-                enemy.setPosition(Vector2f(rand()% window.getSize().x, rand()% window.getSize().y));
-                enemies.push_back(RectangleShape(enemy));
+                e1.enemyShape.setPosition(Vector2f(rand()% window.getSize().x, rand()% window.getSize().y));
+                enemies.push_back(EnemyOne(e1));
                 enemySpawnCounter = 0;
+            }
+
+            //Enemy movement
+            for (size_t i = 0; i < enemies.size(); i++)
+            {
+                //enemyCentre = playerCentre = enemies[i].enemyShape.getGeometricCenter();
+                //enemyarctangent = atan2f(playerCentre.x - enemyCentre.x, playerCentre.y - enemyCentre.y);
+                //enemyAimDirNorm = Vector2f(cos(enemyarctangent), sin(enemyarctangent));
+                //e1.currentVelocity = enemyAimDirNorm * b1.maxSpeed;
+
+                //enemies[i].enemyShape.move(enemies[i].currentVelocity);
+                
             }
 
             //Shooting
@@ -139,7 +168,7 @@ int WinMain()
 
             for (size_t i = 0; i < enemies.size(); i++)
             {
-                window.draw(enemies[i]);
+                window.draw(enemies[i].enemyShape);
             }
 
             window.draw(player);
